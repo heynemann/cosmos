@@ -8,12 +8,15 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Bernardo Heynemann <heynemann@gmail.com>
 
-from preggy import expect
+import factory
 
-from cosmos import __version__
-from tests.base import TestCase
+from cosmos.models.user import User
+from tests.fixtures.base_fixture import BaseFactory
 
 
-class VersionTestCase(TestCase):
-    def test_has_proper_version(self):
-        expect(__version__).to_equal('0.1.0')
+class UserFactory(BaseFactory):
+    class Meta:
+        model = User
+
+    client_id = factory.Faker('slug')
+    client_secret = factory.Faker('uuid4')

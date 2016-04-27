@@ -13,6 +13,7 @@ from cosmos import __version__
 
 tests_require = [
     # 'mock',
+    'factory_boy',
     'nose',
     'coverage',
     'yanc',
@@ -47,10 +48,9 @@ cosmos is an open-source platform-agnostic database as a service solution.
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        # add your dependencies here
-        # remember to use 'package-name>=x.y.z,<x.(y+1).0' notation
-        # (this way you get bugfixes but no breaking changes)
+        'tornado',
         'redis',
+        'redisco',
     ],
     extras_require={
         'tests': tests_require,

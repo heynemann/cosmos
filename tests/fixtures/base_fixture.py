@@ -8,8 +8,16 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Bernardo Heynemann <heynemann@gmail.com>
 
-from unittest import TestCase as PythonTestCase
+
+import factory
 
 
-class TestCase(PythonTestCase):
-    pass
+class BaseFactory(factory.Factory):
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        obj = model_class(*args, **kwargs)
+        obj.save()
+        return obj
