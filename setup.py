@@ -50,7 +50,7 @@ cosmos is an open-source platform-agnostic database as a service solution.
     install_requires=[
         'tornado',
         'redis',
-        'redisco',
+        'redisco==0.1.0',
     ],
     extras_require={
         'tests': tests_require,
