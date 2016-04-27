@@ -13,6 +13,7 @@ from json import loads
 from preggy import expect
 
 from tests.base_test import TornadoTestCase
+from tests.fixtures.user import UserFactory
 from cosmos.models.user import User
 
 
@@ -22,7 +23,10 @@ class RegisterHandlerTestCase(TornadoTestCase):
         expect(response.code).to_equal(400)
 
     def test_cant_register_new_user_with_existing_email(self):
-        pass
+        user = UserFactory.create()
+
+        response = self.post('/user/register', None, "email=%s" % user.email)
+        expect(response.code).to_equal(409)
 
     def test_can_register_new_user(self):
         response = self.post('/user/register', None, "email=%s@gmail.com" % User.generate_secret())

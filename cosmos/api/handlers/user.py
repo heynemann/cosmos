@@ -17,6 +17,12 @@ from cosmos.models.user import User
 class RegisterHandler(BaseHandler):
     def post(self):
         email = self.get_argument('email')
+
+        existing = User.objects.filter(email=email).first()
+        if existing is not None:
+            self.set_status(409)
+            return
+
         user = User(email=email, client_secret=User.generate_secret())
         user.save()
 
