@@ -8,9 +8,16 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Bernardo Heynemann <heynemann@gmail.com>
 
-import logging
 
-from cosmos.version import __version__  # NOQA
+import tornado.web
+
+from cosmos import logger
 
 
-logger = logging.getLogger('thumbor')
+class BaseHandler(tornado.web.RequestHandler):
+    # def _error(self, status, msg=None):
+        # self.set_status(status)
+        # if msg is not None:
+            # logger.warn(msg)
+        # self.finish()
+    pass

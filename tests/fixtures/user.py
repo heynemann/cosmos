@@ -20,3 +20,4 @@ class UserFactory(BaseFactory):
 
     client_id = factory.Faker('slug')
     client_secret = factory.Faker('uuid4')
+    email = factory.Faker('email')

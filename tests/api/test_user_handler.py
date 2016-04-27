@@ -8,9 +8,5 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Bernardo Heynemann <heynemann@gmail.com>
 
-import logging
 
-from cosmos.version import __version__  # NOQA
-
-
-logger = logging.getLogger('thumbor')
+from preggy import expect

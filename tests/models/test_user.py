@@ -22,3 +22,10 @@ class UserModelTestCase(ModelTestCase):
         retrieved = User.objects.filter(client_id=user.client_id).first()
         expect(retrieved).not_to_be_null()
         expect(retrieved.client_secret).to_equal(user.client_secret)
+
+    def test_can_generate_secret(self):
+        user = UserFactory.create()
+        old_client = user.client_secret
+
+        user.generate_secret()
+        expect(user.client_secret).not_to_equal(old_client)

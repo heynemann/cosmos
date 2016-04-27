@@ -19,5 +19,7 @@ class BaseFactory(factory.Factory):
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
         obj = model_class(*args, **kwargs)
+        if not obj.is_valid():
+            raise AssertionError("Object %s is not valid." % obj)
         obj.save()
         return obj

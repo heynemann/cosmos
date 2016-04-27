@@ -49,6 +49,7 @@ cosmos is an open-source platform-agnostic database as a service solution.
     include_package_data=True,
     install_requires=[
         'tornado',
+        'cliff',
         'redis',
         'redisco==0.1.0',
     ],
@@ -58,7 +59,7 @@ cosmos is an open-source platform-agnostic database as a service solution.
     entry_points={
         'console_scripts': [
             # add cli scripts here in this form:
-            # 'cosmos=cosmos.cli:main',
+            'cosmos=cosmos.cli.main:main',
         ],
     },
 )
