@@ -22,7 +22,7 @@ class CosmosApp(App):
         super(CosmosApp, self).__init__(
             description='cosmos console',
             version=__version__,
-            command_manager=CommandManager('cosmos'),
+            command_manager=CommandManager('cosmos.cli'),
             deferred_help=True,
         )
 

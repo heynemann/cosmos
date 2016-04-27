@@ -48,5 +48,8 @@ kill_redis_test:
 tox:
 	@tox
 
+run:
+	@cosmos-api
+
 #docs:
 	#@cd cosmos/docs && make html && open _build/html/index.html
