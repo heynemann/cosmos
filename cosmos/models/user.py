@@ -15,8 +15,8 @@ from redisco import models
 
 class User(models.Model):
     email = models.Attribute(required=True)
-    client_id = models.Attribute(required=True)
     client_secret = models.Attribute(required=True)
 
-    def generate_secret(self):
-        self.client_secret = uuid.uuid4().hex
+    @classmethod
+    def generate_secret(cls):
+        return uuid.uuid4().hex

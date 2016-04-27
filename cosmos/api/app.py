@@ -11,7 +11,7 @@
 import tornado.web
 import tornado.ioloop
 
-# from cosmos.api.handlers.user import RegisterHandler
+from cosmos.api.handlers.user import RegisterHandler
 from cosmos.api.handlers.healthcheck import HealthcheckHandler
 
 
@@ -23,6 +23,7 @@ class CosmosApp(tornado.web.Application):
     def get_handlers(self):
         handlers = [
             (r'/healthcheck', HealthcheckHandler),
+            (r'/user/register', RegisterHandler),
         ]
 
         return handlers

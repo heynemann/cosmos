@@ -18,6 +18,5 @@ class UserFactory(BaseFactory):
     class Meta:
         model = User
 
-    client_id = factory.Faker('slug')
-    client_secret = factory.Faker('uuid4')
     email = factory.Faker('email')
+    client_secret = factory.Faker('uuid4')

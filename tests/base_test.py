@@ -69,7 +69,7 @@ class TornadoTestCase(AsyncHTTPTestCase):
                           headers=headers,
                           allow_nonstandard_methods=True)
 
-    def post(self, path, headers, body):
+    def post(self, path, headers=None, body=None):
         return self.fetch(path,
                           method='POST',
                           body=body,

@@ -19,13 +19,10 @@ class UserModelTestCase(ModelTestCase):
     def test_can_create_user(self):
         user = UserFactory.create()
 
-        retrieved = User.objects.filter(client_id=user.client_id).first()
+        retrieved = User.objects.filter(email=user.email).first()
         expect(retrieved).not_to_be_null()
         expect(retrieved.client_secret).to_equal(user.client_secret)
 
     def test_can_generate_secret(self):
-        user = UserFactory.create()
-        old_client = user.client_secret
-
-        user.generate_secret()
-        expect(user.client_secret).not_to_equal(old_client)
+        secret = User.generate_secret()
+        expect(secret).not_to_be_null()
