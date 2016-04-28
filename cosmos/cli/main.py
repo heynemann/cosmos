@@ -30,9 +30,14 @@ class CosmosApp(App):
         self.LOG.debug('initialize_app')
 
     def prepare_to_run_command(self, cmd):
+        if hasattr(cmd, 'prefix'):
+            cmd.prefix()
+
         self.LOG.debug('prepare_to_run_command %s', cmd.__class__.__name__)
 
     def clean_up(self, cmd, result, err):
+        if hasattr(cmd, 'suffix'):
+            cmd.suffix()
         self.LOG.debug('clean_up %s', cmd.__class__.__name__)
         if err:
             self.LOG.debug('got an error: %s', err)

@@ -79,7 +79,17 @@ class Credentials:
         self.access_token = token
 
     def validate_target(self, name, url, raises=True):
-        working = requests.get('%s/healthcheck' % url.rstrip('/'))
+        try:
+            working = requests.get('%s/healthcheck' % url.rstrip('/'))
+        except requests.exceptions.HTTPError as e:
+            if raises:
+                raise RuntimeError('Could not reach target "%s". Error: %s' % (url, e.message))
+            return False
+        except requests.exceptions.ConnectionError as e:
+            if raises:
+                raise RuntimeError('Could not reach target "%s". Error: %s' % (url, e.message))
+            return False
+
         if working.status_code != 200 or working.text != 'WORKING':
             if raises:
                 raise RuntimeError('Could not reach target "%s". Error: %s' % (url, working.text))
@@ -99,6 +109,20 @@ class Credentials:
             logging.warn(str(err))
 
         self.targets[name] = url
+
+    def validate_target_exists(self, name):
+        if name not in self.targets:
+            raise RuntimeError('Target %s was not found. Try "cosmos target-add %s <url>" first!' % (
+                name, name
+            ))
+
+    def target_remove(self, name):
+        self.validate_target_exists(name)
+        del self.targets[name]
+
+    def target_set(self, name):
+        self.validate_target_exists(name)
+        self.current_target = name
 
     def set_target(self, target_url):
         self.target_url = target_url

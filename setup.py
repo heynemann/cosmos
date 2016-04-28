@@ -53,6 +53,7 @@ cosmos is an open-source platform-agnostic database as a service solution.
         'redis',
         'redisco==0.1.0',
         'requests',
+        'blessings',
     ],
     extras_require={
         'tests': tests_require,
@@ -66,7 +67,9 @@ cosmos is an open-source platform-agnostic database as a service solution.
 
         'cosmos.cli': [
             'target-add = cosmos.cli.target:TargetAdd',
+            'target-remove = cosmos.cli.target:TargetRemove',
             'target-list = cosmos.cli.target:TargetList',
+            'target-set = cosmos.cli.target:TargetSet',
             'login = cosmos.cli.login:Login',
         ],
     },

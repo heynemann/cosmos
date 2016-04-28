@@ -14,6 +14,7 @@ import logging
 import requests
 from cliff.command import Command
 from cliff.lister import Lister
+from blessings import Terminal
 
 from cosmos.cli.credentials import Credentials
 
@@ -37,10 +38,14 @@ class CommandsMixin:
 
         return resp.status_code, resp.text
 
+    def red(self, msg):
+        return "{t.red}{msg}{t.normal}".format(t=self.color, msg=msg)
+
 
 class BaseCommand(Command, CommandsMixin):
     def __init__(self, *args, **kw):
         super(BaseCommand, self).__init__(*args, **kw)
+        self.color = Terminal()
         self.credentials = Credentials()
         logging.getLogger("requests").setLevel(logging.WARNING)
         logging.getLogger("urllib3").setLevel(logging.WARNING)
@@ -49,6 +54,7 @@ class BaseCommand(Command, CommandsMixin):
 class BaseLister(Lister, CommandsMixin):
     def __init__(self, *args, **kw):
         super(BaseLister, self).__init__(*args, **kw)
+        self.color = Terminal()
         self.credentials = Credentials()
         logging.getLogger("requests").setLevel(logging.WARNING)
         logging.getLogger("urllib3").setLevel(logging.WARNING)

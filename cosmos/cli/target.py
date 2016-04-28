@@ -26,17 +26,59 @@ class TargetAdd(BaseCommand):
         self.credentials.target_add(name, url)
         self.credentials.save()
 
-        self.say('Target %s added successfully.' % name)
+        self.say('\nTarget %s added successfully.' % name)
+
+
+class TargetRemove(BaseCommand):
+    "Removes Cosmos API target."
+
+    def get_parser(self, prog_name):
+        parser = super(TargetRemove, self).get_parser(prog_name)
+        parser.add_argument('name', help="The target name to be removed.")
+        return parser
+
+    def take_action(self, parsed_args):
+        name = parsed_args.name
+        self.credentials.target_remove(name)
+        self.credentials.save()
+
+        self.say('Target %s removed successfully.' % name)
+
+
+class TargetSet(BaseCommand):
+    "Removes Cosmos API target."
+
+    def get_parser(self, prog_name):
+        parser = super(TargetSet, self).get_parser(prog_name)
+        parser.add_argument('name', help="The target name to be removed.")
+        return parser
+
+    def take_action(self, parsed_args):
+        name = parsed_args.name
+        self.credentials.target_set(name)
+        self.credentials.save()
+
+        self.say('Target %s set successfully.' % name)
 
 
 class TargetList(BaseLister):
+    def prefix(self):
+        self.say('{t.green}List of available targets:{t.normal}'.format(t=self.color))
+
     def take_action(self, parsed_args):
         return (
             ('Name', 'URL', 'Reachable'),
             tuple(sorted(
                 [
-                    (name, url, self.credentials.validate_target(name, url) and 'yes' or 'no')
+                    (
+                        "%s%s" % (name, name == self.credentials.current_target and " *" or ""),
+                        url,
+                        self.credentials.validate_target(name, url, False) and 'yes' or 'no'
+                    )
                     for name, url in self.credentials.targets.items()
                 ]
             ))
         )
+
+    def suffix(self):
+        self.say('{t.bold}* currently selected target{t.normal}'.format(t=self.color))
