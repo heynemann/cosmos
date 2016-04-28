@@ -66,6 +66,7 @@ cosmos is an open-source platform-agnostic database as a service solution.
 
         'cosmos.cli': [
             'register = cosmos.cli.register:Register',
+            'login = cosmos.cli.login:Login',
         ],
     },
 )
