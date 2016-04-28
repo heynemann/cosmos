@@ -10,6 +10,7 @@
 
 import os
 from os.path import expanduser, exists, dirname
+import logging
 
 import requests
 from yaml import load, dump
@@ -25,6 +26,8 @@ class Credentials:
         self.access_token = None
         self.name = None
         self.user_id = None
+        self.current_target = None
+        self.targets = {}
 
         if self.path is None:
             self.path = expanduser('~/.config/cosmos/.credentials')
@@ -35,8 +38,14 @@ class Credentials:
         return {
             'access_token': self.access_token,
             'user_id': self.user_id,
-            'name': self.name
+            'name': self.name,
+            'current_target': self.current_target,
+            'targets': self.targets,
         }
+
+    def from_dict(self, values):
+        for key, value in values.items():
+            setattr(self, key, value)
 
     def load(self):
         if not exists(self.path):
@@ -46,7 +55,7 @@ class Credentials:
             obj = load(origin.read(), Loader=Loader)
             if obj is None:
                 return
-            self.access_token = obj['access_token']
+            self.from_dict(obj)
 
     def save(self):
         if not exists(self.path):
@@ -68,3 +77,28 @@ class Credentials:
     def authenticate(self, token):
         self.validate(token)
         self.access_token = token
+
+    def validate_target(self, name, url, raises=True):
+        working = requests.get('%s/healthcheck' % url.rstrip('/'))
+        if working.status_code != 200 or working.text != 'WORKING':
+            if raises:
+                raise RuntimeError('Could not reach target "%s". Error: %s' % (url, working.text))
+            return False
+
+        return True
+
+    def target_add(self, name, url):
+        if name in self.targets:
+            raise RuntimeError('Target %s is already registered. Try "cosmos target-remove %s" first!' % (
+                name, name
+            ))
+
+        try:
+            self.validate_target(name, url)
+        except RuntimeError, err:
+            logging.warn(str(err))
+
+        self.targets[name] = url
+
+    def set_target(self, target_url):
+        self.target_url = target_url
