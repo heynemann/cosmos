@@ -46,7 +46,7 @@ class TargetRemove(BaseCommand):
 
 
 class TargetSet(BaseCommand):
-    "Removes Cosmos API target."
+    "Sets the specified target as the current Cosmos target."
 
     def get_parser(self, prog_name):
         parser = super(TargetSet, self).get_parser(prog_name)
@@ -62,6 +62,7 @@ class TargetSet(BaseCommand):
 
 
 class TargetList(BaseLister):
+    "Lists all available Cosmos API targets."
     def prefix(self):
         self.say('{t.green}List of available targets:{t.normal}'.format(t=self.color))
 
