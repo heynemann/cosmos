@@ -1,27 +1,30 @@
 import KoaApp from 'koa'
-import fetch from 'node-fetch'
+import _ from 'koa-route'
+import getURL from './fetch'
 
 export default class CosmosApp {
   constructor() {
     this.app = new KoaApp()
     this.url = 'https://api.github.com/orgs/facebook'
+    this.handlers = [
+      { method: 'GET', route: '/test', handler: this.handleTest },
+    ]
   }
 
-  async get() {
-    try {
-      const res = await fetch(this.url)
-      const json = await res.json()
-      return json
-    } catch (e) {
-      return null
-    }
+  async handleTest(ctx) {
+    ctx.body = await getURL(this.url)
   }
 
   async run() {
     const self = this
-
-    this.app.use(async (ctx) => {
-      ctx.body = await self.get()
+    this.handlers.forEach((route) => {
+      const handler = route.handler.bind(self)
+      const method = _[route.method.toLowerCase()]
+      self.app.use(
+        method(route.route, async (ctx) => {
+          await handler(ctx)
+        })
+      )
     })
 
     this.app.listen(3000)
