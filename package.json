@@ -38,7 +38,11 @@
     "babel-preset-latest": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "babel-preset-stage-3": "^6.16.0",
+    "eslint": "^3.6.1",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
     "jspm": "^0.16.45",
+    "undefined": "^0.1.0",
     "webpack": "^1.13.2"
   },
   "dependencies": {
