@@ -13,7 +13,7 @@ no_targets__:
 
 # install all dependencies (do not forget to create a virtualenv first)
 setup:
-	echo "Setting up all dependencies..."
+	@npm install
 
 # test your application (tests in the tests/ directory)
 #test: test-redis unit

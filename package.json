@@ -1,0 +1,27 @@
+{
+  "name": "cosmos",
+  "version": "0.1.0",
+  "description": "Cosmos is a database-as-a-service management system for the cloud.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heynemann/cosmos.git"
+  },
+  "keywords": [
+    "database",
+    "saas",
+    "dbaas",
+    "redis",
+    "postgres",
+    "mongo"
+  ],
+  "author": "Bernardo Heynemann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heynemann/cosmos/issues"
+  },
+  "homepage": "https://github.com/heynemann/cosmos#readme"
+}
