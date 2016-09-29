@@ -23,5 +23,27 @@
   "bugs": {
     "url": "https://github.com/heynemann/cosmos/issues"
   },
-  "homepage": "https://github.com/heynemann/cosmos#readme"
+  "homepage": "https://github.com/heynemann/cosmos#readme",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-core": "^6.16.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-regenerator": "^6.16.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-preset-stage-3": "^6.16.0",
+    "jspm": "^0.16.45",
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "koa": "^2.0.0-alpha.7",
+    "node-fetch": "^1.6.3"
+  }
 }
