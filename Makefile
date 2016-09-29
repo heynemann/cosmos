@@ -13,43 +13,31 @@ no_targets__:
 
 # install all dependencies (do not forget to create a virtualenv first)
 setup:
-	@pip install -U -e .\[tests\]
+	echo "Setting up all dependencies..."
 
 # test your application (tests in the tests/ directory)
-test: redis_test unit
+#test: test-redis unit
 
-unit:
-	@coverage run --branch `which nosetests` -vv --with-yanc -s tests/
-	@coverage report -m --fail-under=80
+#unit:
 
 # show coverage in html format
-coverage-html: unit
-	@coverage html
+#coverage-html: unit
+	#@coverage html
 
 # get a redis instance up (localhost:4444)
-redis: kill_redis
+redis: redis-shutdown
 	redis-server ./redis.conf; sleep 1
 	redis-cli -p 4444 info > /dev/null
 
 # kill this redis instance (localhost:4444)
-kill_redis:
+redis-shutdown:
 	-redis-cli -p 4444 shutdown
 
 # get a redis instance up for your unit tests (localhost:4448)
-redis_test: kill_redis_test
+test-redis: test-redis-shutdown
 	@redis-server ./redis.tests.conf; sleep 1
 	@redis-cli -p 4448 info > /dev/null
 
 # kill the test redis instance (localhost:4448)
-kill_redis_test:
+test-redis-shutdown:
 	@-redis-cli -p 4448 shutdown
-
-# run tests against all supported python versions
-tox:
-	@tox
-
-run:
-	@cosmos-api
-
-#docs:
-	#@cd cosmos/docs && make html && open _build/html/index.html
