@@ -15,6 +15,13 @@ no_targets__:
 setup:
 	@npm install
 
+services: services-shutdown
+	@docker-compose -p cosmos -f ./docker/docker-compose.yml up -d
+
+services-shutdown:
+	@docker-compose -p cosmos -f ./docker/docker-compose.yml stop
+	@docker-compose -p cosmos -f ./docker/docker-compose.yml rm -f
+
 # test your application (tests in the tests/ directory)
 #test: test-redis unit
 
@@ -24,15 +31,6 @@ setup:
 #coverage-html: unit
 	#@coverage html
 
-# get a redis instance up (localhost:4444)
-redis: redis-shutdown
-	redis-server ./redis.conf; sleep 1
-	redis-cli -p 4444 info > /dev/null
-
-# kill this redis instance (localhost:4444)
-redis-shutdown:
-	-redis-cli -p 4444 shutdown
-
 # get a redis instance up for your unit tests (localhost:4448)
 test-redis: test-redis-shutdown
 	@redis-server ./redis.tests.conf; sleep 1
@@ -41,3 +39,5 @@ test-redis: test-redis-shutdown
 # kill the test redis instance (localhost:4448)
 test-redis-shutdown:
 	@-redis-cli -p 4448 shutdown
+
+run: services
