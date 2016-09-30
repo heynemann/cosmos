@@ -1,30 +1,36 @@
-var webpack = require('webpack');
-var path = require('path');
-var fs = require('fs');
+const path = require('path')
+const fs = require('fs')
 
-var nodeModules = {};
+const nodeModules = {}
 fs.readdirSync('node_modules')
-  .filter(function(x) {
-    return ['.bin'].indexOf(x) === -1;
+  .filter(x =>
+    ['.bin'].indexOf(x) === -1
+  )
+  .forEach((mod) => {
+    nodeModules[mod] = `commonjs ${mod}`
   })
-  .forEach(function(mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
 
 module.exports = {
-  entry: ['babel-polyfill', './src/main.js'],
+  entry: {
+    app: ['babel-polyfill', './src/main.js'],
+    cosmos: ['babel-polyfill', './src/cmd.js'],
+  },
   target: 'node',
   module: {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel'
-    }]
+      loader: 'babel',
+    }, {
+      test: /\.json$/,
+      exclude: /node_modules/,
+      loader: 'json',
+    }],
   },
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'backend.js'
+    filename: '[name].js',
   },
   externals: nodeModules,
-  devtool: 'sourcemap'
+  devtool: 'sourcemap',
 }

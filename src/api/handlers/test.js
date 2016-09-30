@@ -8,6 +8,7 @@ export default class TestHandler {
   }
 
   async get(ctx) {
-    ctx.body = await getURL(this.url)
+    //ctx.body = await getURL(this.url)
+    ctx.body = await this.app.mongodb.db.admin().ping()
   }
 }

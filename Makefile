@@ -13,6 +13,7 @@ no_targets__:
 
 # install all dependencies (do not forget to create a virtualenv first)
 setup:
+	@npm install -g nodemon babel-cli webpack
 	@npm install
 
 services: services-shutdown
@@ -41,3 +42,4 @@ test-redis-shutdown:
 	@-redis-cli -p 4448 shutdown
 
 run: services
+	@nodemon --exec babel-node --presets=es2015 -- src/main.js
