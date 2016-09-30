@@ -42,4 +42,4 @@ test-redis-shutdown:
 	@-redis-cli -p 4448 shutdown
 
 run: services
-	@nodemon --exec babel-node --presets=es2015 -- src/main.js
+	@nodemon --exec babel-node --presets=es2015 -- src/cmd.js start
