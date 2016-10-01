@@ -1,7 +1,7 @@
 import yargs from 'yargs'
-import pjson from '../package.json'
+import pjson from '~/../package.json'
 
-const startCmd = require('./cmd/start')
+import startCmd from '~/cmd/start'
 
 export default yargs
   .usage('Cosmos is responsible for creating your own Data Universe.')

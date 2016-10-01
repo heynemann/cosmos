@@ -2,16 +2,29 @@ import KoaApp from 'koa'
 import _ from 'koa-route'
 import mongoose from 'mongoose'
 
-import TestHandler from './handlers/test'
+import TestHandler from '~/api/handlers/test'
+import HealthcheckHandler from '~/api/handlers/healthcheck'
 
 export default class CosmosApp {
   constructor(config) {
     this.config = config
     this.allowedMethods = ['get', 'post', 'put', 'delete']
     this.app = new KoaApp()
+
+    this.configureMiddleware()
     this.handlers = [
       new TestHandler(this),
+      new HealthcheckHandler(this),
     ]
+  }
+
+  configureMiddleware() {
+    this.app.use(async function (ctx, next) {
+      const start = new Date()
+      await next()
+      const ms = new Date() - start
+      ctx.set('X-Response-Time', `${ms}ms`)
+    })
   }
 
   async initializeServices() {
@@ -20,10 +33,10 @@ export default class CosmosApp {
 
   async initializeMongoDB() {
     const hosts = this.config.get('app.services.mongo.hosts')
-    this.mongodb = mongoose.createConnection(hosts)
-    this.mongodb.on('error', console.error)
+    this.app.context.mongodb = mongoose.createConnection(hosts)
+    this.app.context.mongodb.on('error', console.error)
     try {
-      const result = await this.mongodb.db.admin().ping()
+      const result = await this.app.context.mongodb.db.admin().ping()
       if (!result) {
         console.log('FAILED TO CONNECT TO MONGO!')
       }

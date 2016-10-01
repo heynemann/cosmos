@@ -32,14 +32,7 @@ services-shutdown:
 #coverage-html: unit
 	#@coverage html
 
-# get a redis instance up for your unit tests (localhost:4448)
-test-redis: test-redis-shutdown
-	@redis-server ./redis.tests.conf; sleep 1
-	@redis-cli -p 4448 info > /dev/null
+run: services run-app
 
-# kill the test redis instance (localhost:4448)
-test-redis-shutdown:
-	@-redis-cli -p 4448 shutdown
-
-run: services
+run-app:
 	@nodemon --exec babel-node --presets=es2015 -- src/cmd.js start
