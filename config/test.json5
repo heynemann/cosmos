@@ -1,0 +1,14 @@
+{
+  app: {
+    services: {
+      mongo: {
+        hosts: ['mongodb://localhost:4445/cosmos_test']
+      },
+      redis: {
+        host: "localhost",
+        port: 4444,
+        db: 1
+      }
+    }
+  }
+}

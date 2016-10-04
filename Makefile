@@ -28,8 +28,11 @@ test: test-unit
 
 test-unit: services test-unit-coverage
 
+test-unit-watch: services
+	@./node_modules/mocha/bin/mocha --watch --require babel-polyfill --compilers js:babel-core/register test/unit/**/*Test.js
+
 test-unit-coverage: test-unit-coverage-html
-	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --check-coverage -- -u tdd --recursive test/
+	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --check-coverage -- -u tdd --recursive test/unit/
 
 test-unit-coverage-html:
 	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul report --include=./coverage/coverage.json html

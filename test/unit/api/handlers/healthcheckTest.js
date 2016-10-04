@@ -10,6 +10,7 @@ describe('Handlers', () => {
       expect(body).not.to.equal('')
 
       const result = JSON.parse(body)
+
       expect(result.mongo).not.to.equal(null)
       expect(result.mongo.up).to.equal(true)
     })
