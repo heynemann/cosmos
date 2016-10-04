@@ -18,10 +18,9 @@ export default class HealthcheckHandler {
   }
 
   async get(ctx) {
-    let failed = false
     this.services.mongo = await checkMongoDb(ctx.mongodb)
 
-    ctx.body = this.services
+    ctx.body = JSON.stringify(this.services)
     if (this.hasFailed()) {
       ctx.status = 500
     }

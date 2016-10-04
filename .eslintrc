@@ -6,7 +6,8 @@
     "max-depth": [2, 4],
     "max-nested-callbacks": [2, 4],
     "no-lone-blocks": 2,
-    "no-param-reassign": ["error", { "props": false }]
-    "import/no-unresolved": [2, { "ignore": ["^[~]"] }]
+    "no-param-reassign": ["error", { "props": false }],
+    "import/no-unresolved": [2, { "ignore": ["^[~]"] }],
+    "import/extensions": [2, "never", { "json": "always" }]
   }
 }

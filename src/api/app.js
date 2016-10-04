@@ -2,7 +2,6 @@ import KoaApp from 'koa'
 import _ from 'koa-route'
 import mongoose from 'mongoose'
 
-import TestHandler from '~/api/handlers/test'
 import HealthcheckHandler from '~/api/handlers/healthcheck'
 
 export default class CosmosApp {
@@ -13,13 +12,12 @@ export default class CosmosApp {
 
     this.configureMiddleware()
     this.handlers = [
-      new TestHandler(this),
       new HealthcheckHandler(this),
     ]
   }
 
   configureMiddleware() {
-    this.app.use(async function (ctx, next) {
+    this.app.use(async (ctx, next) => {
       const start = new Date()
       await next()
       const ms = new Date() - start
@@ -45,8 +43,9 @@ export default class CosmosApp {
     }
   }
 
-  async run() {
+  async initializeApp() {
     await this.initializeServices()
+
     this.handlers.forEach((handler) => {
       this.allowedMethods.forEach((methodName) => {
         if (!handler[methodName]) {
@@ -62,7 +61,10 @@ export default class CosmosApp {
         )
       })
     })
+  }
 
+  async run() {
+    await this.initializeApp()
     this.app.listen(3000)
   }
 }
