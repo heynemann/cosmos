@@ -1,4 +1,6 @@
-export default class TestHandler {
+import checkMongoDb from '~/extensions/healthcheck/mongodb'
+
+export default class HealthcheckHandler {
   constructor(app) {
     this.app = app
     this.route = '/healthcheck'
@@ -6,38 +8,21 @@ export default class TestHandler {
   }
 
   resetServices() {
-    this.services = {
-      mongo: {
-        up: true,
-        uptime: 0,
-        localTime: null,
-        connections: {},
-        error: null,
-      }
-    }
+    this.services = {}
+  }
+
+  hasFailed() {
+    return (
+      !this.services.mongo.up
+    )
   }
 
   async get(ctx) {
     let failed = false
-    try {
-      const res = await ctx.mongodb.db.admin().serverStatus()
-      if (res) {
-        this.services.mongo.uptime = res.uptime
-        this.services.mongo.localTime = res.localTime
-        this.services.mongo.connections = res.connections
-      } else {
-        this.services.mongo.up = false
-        this.services.mongo.error = "Could not get server status!"
-        failed = true
-      }
-    } catch (error) {
-      this.services.mongo.up = false
-      this.services.mongo.error = error.message
-      failed = true
-    }
+    this.services.mongo = await checkMongoDb(ctx.mongodb)
 
     ctx.body = this.services
-    if (failed) {
+    if (this.hasFailed()) {
       ctx.status = 500
     }
   }

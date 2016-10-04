@@ -1,5 +1,5 @@
 import config from 'config'
-import CosmosApp from '../api/app'
+import CosmosApp from '~/api/app'
 
 const command = 'start'
 const describe = 'starts the cosmos API'
