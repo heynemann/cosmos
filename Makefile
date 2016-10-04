@@ -11,7 +11,7 @@ list:
 # required for list
 no_targets__:
 
-# install all dependencies (do not forget to create a virtualenv first)
+# install all dependencies
 setup:
 	@npm install -g nodemon babel-cli webpack mocha
 	@npm install
@@ -23,8 +23,11 @@ services-shutdown:
 	@docker-compose -p cosmos -f ./docker/docker-compose.yml stop
 	@docker-compose -p cosmos -f ./docker/docker-compose.yml rm -f
 
-# test your application (tests in the tests/ directory)
+# test your application (tests in the test/ directory)
 test: test-unit
+
+test-watch: services
+	@./node_modules/mocha/bin/mocha --watch --require babel-polyfill --compilers js:babel-core/register test/**/*Test.js
 
 test-unit: services test-unit-coverage
 
