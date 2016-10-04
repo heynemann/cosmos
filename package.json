@@ -27,6 +27,7 @@
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.16.0",
+    "babel-istanbul": "^0.11.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
@@ -46,6 +47,7 @@
     "eslint": "^3.6.1",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^1.16.0",
+    "istanbul": "^0.4.5",
     "json-loader": "^0.5.4",
     "jspm": "^0.16.45",
     "mocha": "^3.1.0",

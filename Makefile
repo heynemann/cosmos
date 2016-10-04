@@ -26,14 +26,13 @@ services-shutdown:
 # test your application (tests in the tests/ directory)
 test: test-unit
 
-test-unit: services test-unit-run
+test-unit: services test-unit-coverage
 
-test-unit-run:
-	@./node_modules/mocha/bin/mocha --require babel-polyfill --compilers js:babel-core/register test/unit/**/*Test.js
+test-unit-coverage: test-unit-coverage-html
+	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --check-coverage -- -u tdd --recursive test/
 
-# show coverage in html format
-#coverage-html: unit
-	#@coverage html
+test-unit-coverage-html:
+	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul report --include=./coverage/coverage.json html
 
 run: services run-app
 
