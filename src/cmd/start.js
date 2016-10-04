@@ -5,7 +5,7 @@ const command = 'start'
 const describe = 'starts the cosmos API'
 const builder = () => {
 }
-const handler = function () {
+const handler = () => {
   const app = new CosmosApp(config)
   app.run()
 }

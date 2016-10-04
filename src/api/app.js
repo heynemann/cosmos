@@ -1,8 +1,8 @@
 import KoaApp from 'koa'
 import _ from 'koa-route'
-import mongoose from 'mongoose'
 
 import HealthcheckHandler from '~/api/handlers/healthcheck'
+import { connect as connectMongoDb } from '~/extensions/mongodb'
 
 export default class CosmosApp {
   constructor(config) {
@@ -26,21 +26,8 @@ export default class CosmosApp {
   }
 
   async initializeServices() {
-    await this.initializeMongoDB()
-  }
-
-  async initializeMongoDB() {
     const hosts = this.config.get('app.services.mongo.hosts')
-    this.app.context.mongodb = mongoose.createConnection(hosts)
-    this.app.context.mongodb.on('error', console.error)
-    try {
-      const result = await this.app.context.mongodb.db.admin().ping()
-      if (!result) {
-        console.log('FAILED TO CONNECT TO MONGO!')
-      }
-    } catch (err) {
-      console.log(err)
-    }
+    this.app.context.mongodb = await connectMongoDb(hosts)
   }
 
   async initializeApp() {
