@@ -52,6 +52,7 @@
     "jspm": "^0.16.45",
     "mocha": "^3.1.0",
     "nodemon": "^1.10.2",
+    "plato": "^1.7.0",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^4.0.0",
     "undefined": "^0.1.0",

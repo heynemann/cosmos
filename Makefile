@@ -41,6 +41,10 @@ test-unit-coverage:
 test-unit-coverage-html:
 	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul report --include=./coverage/coverage.json html
 
+static-analysis:
+	@./node_modules/.bin/plato -r -e .eslintrc -d report src/
+	@open ./report/index.html
+
 run: services run-app
 
 run-app:
