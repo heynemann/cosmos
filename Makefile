@@ -5,6 +5,8 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Bernardo Heynemann <heynemann@gmail.com>
 
+.PHONY: build
+
 # lists all available targets
 list:
 	@sh -c "$(MAKE) -p no_targets__ | awk -F':' '/^[a-zA-Z0-9][^\$$#\/\\t=]*:([^=]|$$)/ {split(\$$1,A,/ /);for(i in A)print A[i]}' | grep -v '__\$$' | grep -v 'make\[1\]' | grep -v 'Makefile' | sort"
@@ -15,6 +17,10 @@ no_targets__:
 setup:
 	@npm install -g nodemon babel-cli webpack mocha
 	@npm install
+
+build:
+	@rm -rf lib/
+	@webpack
 
 services: services-shutdown
 	@docker-compose -p cosmos -f ./docker/docker-compose.yml up -d
