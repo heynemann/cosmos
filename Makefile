@@ -41,8 +41,8 @@ _test-unit-watch: _services
 	@./node_modules/mocha/bin/mocha --watch --require babel-polyfill --compilers js:babel-core/register test/unit/**/*Test.js
 
 _test-unit-coverage:
-	#@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --check-coverage -- -u tdd test/unit/**/*Test.js
-	@env NODE_ENV=test NODE_CONFIG_DIR=`pwd`/config ./node_modules/.bin/nyc ./node_modules/.bin/ava ./test/unit/**/*Test.js
+	@./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --check-coverage -- -u tdd test/unit/**/*Test.js
+	#@env NODE_ENV=test NODE_CONFIG_DIR=`pwd`/config ./node_modules/.bin/nyc ./node_modules/.bin/ava ./test/unit/**/*Test.js
 	@$(MAKE) _test-unit-coverage-html
 
 _test-unit-coverage-html:
