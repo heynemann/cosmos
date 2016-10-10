@@ -4,7 +4,8 @@
   "description": "Cosmos is a database-as-a-service management system for the cloud.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "build": "make build",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/heynemann/cosmos#readme",
   "devDependencies": {
+    "ava": "^0.16.0",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.16.0",
     "babel-istanbul": "^0.11.0",
@@ -52,6 +54,7 @@
     "jspm": "^0.16.45",
     "mocha": "^3.1.0",
     "nodemon": "^1.10.2",
+    "nyc": "^8.3.1",
     "plato": "^1.7.0",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^4.0.0",
@@ -67,11 +70,20 @@
     "node-fetch": "^1.6.3",
     "yargs": "^5.0.0"
   },
-	"scripts": {
-		"build": "make build",
-		"prepublish": "npm run build"
-	},
-	"bin": {
+  "bin": {
     "cosmos": "./lib/cosmos.js"
+  },
+  "ava": {
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
+    "babelrc": true,
+    "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   }
 }

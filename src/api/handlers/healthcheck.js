@@ -1,4 +1,4 @@
-import { check as checkMongoDb } from '~/extensions/mongodb'
+import { check as checkMongoDb } from '../../extensions/mongodb'
 
 export default class HealthcheckHandler {
   constructor(app) {

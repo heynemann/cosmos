@@ -1,8 +1,8 @@
 import KoaApp from 'koa'
 import _ from 'koa-route'
 
-import HealthcheckHandler from '~/api/handlers/healthcheck'
-import { connect as connectMongoDb } from '~/extensions/mongodb'
+import HealthcheckHandler from '../api/handlers/healthcheck'
+import { connect as connectMongoDb } from '../extensions/mongodb'
 
 export default class CosmosApp {
   constructor(config) {
